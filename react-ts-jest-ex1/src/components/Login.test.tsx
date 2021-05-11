@@ -70,12 +70,21 @@ describe('Login components tests', () => {
       loginSrvSpy = jest.spyOn(LoginService.prototype, 'login')
     })
 
-    it('passes creds correctly', () => {
+    it('it correctly works with login service', () => {
       // setup
       fireEvent.click(btnInput)
 
       // assert
       expect(loginSrvSpy).toBeCalled()
+    })
+
+    it('passes creds correctly', () => {
+      fireEvent.change(loginInput, { target: { value: 'testUser' } })
+      fireEvent.change(pwInput, { target: { value: 'testPw' } })
+
+      fireEvent.click(btnInput)
+
+      expect(loginSrvSpy).toBeCalledWith('testUser', 'testPw')
     })
   })
 })
