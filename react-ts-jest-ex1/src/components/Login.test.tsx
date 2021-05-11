@@ -1,4 +1,6 @@
+import { fireEvent } from '@testing-library/dom'
 import * as ReactDOM from 'react-dom'
+import { LoginService } from '../services/LoginService'
 
 import { Login } from './Login'
 
@@ -48,6 +50,32 @@ describe('Login components tests', () => {
           .querySelector("[data-test='login-input']")
           ?.getAttribute('name')
       ).toBe('login')
+    })
+  })
+
+  describe('tests for credentials', () => {
+    let inputs: NodeListOf<HTMLInputElement>,
+      loginInput: HTMLInputElement,
+      pwInput: HTMLInputElement,
+      btnInput: HTMLInputElement
+
+    let loginSrvSpy: jest.SpyInstance
+
+    beforeEach(() => {
+      inputs = container.querySelectorAll('input')
+      loginInput = inputs[0]
+      pwInput = inputs[1]
+      btnInput = inputs[2]
+
+      loginSrvSpy = jest.spyOn(LoginService.prototype, 'login')
+    })
+
+    it('passes creds correctly', () => {
+      // setup
+      fireEvent.click(btnInput)
+
+      // assert
+      expect(loginSrvSpy).toBeCalled()
     })
   })
 })
