@@ -73,6 +73,7 @@ export class Login extends React.Component<{}, CredentialsState> {
             value={this.state.userName}
             onChange={e => this.setUserName(e)}
             required
+            placeholder='user name'
           />
           <br />
           <input
@@ -82,6 +83,7 @@ export class Login extends React.Component<{}, CredentialsState> {
             onChange={e => this.setPassword(e)}
             type='password'
             required
+            placeholder='password'
           />
           <br />
           <input data-test='submit-button' type='submit' value='Login' />

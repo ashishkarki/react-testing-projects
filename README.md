@@ -1,0 +1,3 @@
+## Showing the ropes for testing in the react ecosystem.
+
+## more details to be added ...
