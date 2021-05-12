@@ -77,7 +77,7 @@ describe('Login components tests', () => {
       expect(loginSrvSpy).toBeCalled()
     })
 
-    it('passes creds correctly', () => {
+    it.only('passes creds correctly', () => {
       fireEvent.change(loginInput, { target: { value: 'testUser' } })
       fireEvent.change(pwInput, { target: { value: 'testPw' } })
 
