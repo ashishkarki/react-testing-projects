@@ -24,7 +24,7 @@ export class Login extends React.Component<{}, CredentialsState> {
 
   private async handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault()
-    console.log('Click!!!!')
+
     const loginResponse = await this.loginService.login(
       this.state.userName,
       this.state.password
@@ -43,7 +43,8 @@ export class Login extends React.Component<{}, CredentialsState> {
   }
 
   render() {
-    let loginLabel = <label>Did you enter your creds??</label>
+    let loginLabel
+    // <label>Did you enter your creds??</label>
     if (this.state.loginAttempted) {
       if (this.state.isLoggedIn) {
         loginLabel = <label>Login successful</label>

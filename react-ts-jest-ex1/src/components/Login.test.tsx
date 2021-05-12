@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/dom'
+import { fireEvent, waitFor, waitForElement } from '@testing-library/dom'
 import * as ReactDOM from 'react-dom'
 import { LoginService } from '../services/LoginService'
 
@@ -29,12 +29,11 @@ describe('Login components tests', () => {
       expect(inputs[2].value).toBe('Login')
     })
 
-    test("shouldn't display labels", () => {
-      const labels = container.querySelectorAll('label')
+    // test("shouldn't display labels", () => { //duplicate
+    //   const labels = container.querySelectorAll('label')
 
-      //expect(labels).not.toBeInTheDocument()
-      expect(labels).toHaveLength(1)
-    })
+    //   expect(labels).not.toBeInTheDocument()
+    // })
 
     test('render the document using data-test query', () => {
       expect(
@@ -85,6 +84,44 @@ describe('Login components tests', () => {
       fireEvent.click(btnInput)
 
       expect(loginSrvSpy).toBeCalledWith('testUser', 'testPw')
+    })
+  })
+
+  describe('works correctly with async code', () => {
+    let inputs: NodeListOf<HTMLInputElement>, loginBtn: HTMLInputElement
+
+    let loginSrvSpy: jest.SpyInstance
+
+    beforeEach(() => {
+      inputs = container.querySelectorAll('input')
+      loginBtn = inputs[2]
+
+      loginSrvSpy = jest.spyOn(LoginService.prototype, 'login')
+    })
+
+    test('renders the status label correctly for Invalid login case', async () => {
+      loginSrvSpy.mockResolvedValue(false)
+
+      fireEvent.click(loginBtn)
+      const statusLabel = await waitForElement(() =>
+        container.querySelector('label')
+      )
+      //container.querySelector('label')
+
+      expect(statusLabel).toBeInTheDocument()
+      expect(statusLabel).toHaveTextContent('Login failed')
+    })
+
+    test('renders the status label correctly for Valid login case', async () => {
+      loginSrvSpy.mockResolvedValue(true)
+
+      fireEvent.click(loginBtn)
+      const statusLabel = await waitForElement(() =>
+        container.querySelector('label')
+      )
+
+      expect(statusLabel).toBeInTheDocument()
+      expect(statusLabel).toHaveTextContent('Login successful')
     })
   })
 })

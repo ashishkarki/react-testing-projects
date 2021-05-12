@@ -10,10 +10,10 @@ export class LoginService {
       })
 
       if (loginResponse.status === 201) {
-        console.log('Successful login')
+        // console.log('Successful login')
         return true
       } else {
-        console.log('Un-successful login')
+        // console.log('Un-successful login')
         return false
       }
     } catch (error) {
